@@ -5,7 +5,8 @@ import datetime
 import urllib2
 
 a = datetime.datetime.now()
-Flag=0
+Flag = 0
+
 
 # 生产者
 def production(q):
@@ -49,7 +50,8 @@ def consumption(q, uid):
 
             else:
                 b = datetime.datetime.now()
-                print "时间:" + str((b - a).seconds) + ",消费key：" + str(107592 - q.qsize())+ ",进程序号:" + str(uid) + ",剩余key:" + str(q.qsize()) + ",key:" + key
+                print "时间:" + str((b - a).seconds) + ",消费key：" + str(107592 - q.qsize()) + ",进程序号:" + str(
+                    uid) + ",剩余key:" + str(q.qsize()) + ",key:" + key
                 # print "时间:" + str((b - a).seconds)
                 # print "进程序号:" + str(uid)
                 # print "剩余key:" + str(q.qsize())
@@ -59,17 +61,23 @@ def consumption(q, uid):
 
 
 if __name__ == '__main__':
+    # 总队列
+    tatol = []
     # 创建队列
-    q = Queue()
+    q1 = Queue()
+    # q2 = Queue(20000)
+    # q3 = Queue(20000)
+    # q4 = Queue(20000)
+    # q5 = Queue(20000)
     # 创建生产者，将所有密码加入队列中
-    p = Process(target=production, args=(q,))
+    p = Process(target=production, args=(q1,))
     # 设置守护进程
     # p.daemon = True
     # 开始生产
     p.start()
     time.sleep(5)
-    for uid in range(5):
+    for uid in range(20):
         # 创建消费者
-        c = Process(target=consumption, args=(q, uid))
+        c = Process(target=consumption, args=(q1, uid))
         # 开始消费
         c.start()
